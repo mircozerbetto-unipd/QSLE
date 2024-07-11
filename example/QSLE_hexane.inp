@@ -1,0 +1,19 @@
+Prefix QSLE_hexane
+Pes QSLE_adiabatic_PESs.dat
+d01 QSLE_d01.dat
+pdb 4bead.pdb
+refatoms 1 2 3 4
+Angle_points 300
+Momentum_points 301
+Derivation_method FD
+Timestep 0.005
+Total_steps 2000000000
+Restart_step 200000
+Normalization_step 200
+Temperature 298.15
+Mom_max 1.5
+Initial_distribution Boltzmann 
+Force_transition up
+Reff 4.7
+C 6.0
+Viscosity 2.9796e-4
