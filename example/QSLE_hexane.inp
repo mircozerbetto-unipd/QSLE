@@ -3,7 +3,7 @@ Pes QSLE_adiabatic_PESs.dat
 d01 QSLE_d01.dat
 pdb 4bead.pdb
 refatoms 1 2 3 4
-Angle_points 300
+Angle_points 1000
 Momentum_points 301
 Derivation_method FD
 Timestep 0.005
