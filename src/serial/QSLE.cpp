@@ -865,7 +865,7 @@ void QSLE::compute_transition_coefficients()
                 D1_tmp= d01_fun(angle_init)* mom_tmp /g0_fun(angle_init);
                 M_old= 2.0* D0* D1_tmp;
                 W_tmp=0.;
-                omega0_old = deltaE_fun(angle_init);
+                omega0_old = deltaE_fun(angle_init)/htag;
                 if (abs(supp_d01[0]) == abs(supp_d01.back()) && abs(supp_d01[0]) >= 3.14){
 					while (time < 7.0* tau_dec){
 						time += timestep;
@@ -876,7 +876,7 @@ void QSLE::compute_transition_coefficients()
 						if (angle_tmp > M_PI){
 							angle_tmp -= 2.0*M_PI;
 						}
-						if (timestep*omega0_old > M_PI_4){
+						if (timestep*omega0_old > M_PI_4/2){
 							break;
 						}
 						v_tmp = mom_tmp/g0_fun(angle_old) + 0.5 * timestep * (MS_fun.deriv(1, angle_old) /g0_fun(angle_old) + MS_fun.deriv(1, angle_tmp) /g0_fun(angle_tmp));
@@ -903,7 +903,7 @@ void QSLE::compute_transition_coefficients()
 						if (angle_tmp < supp_d01[0] || angle_tmp > supp_d01.back()){
 							break;
 						}
-						if (timestep*omega0_old > M_PI_4){
+						if (timestep*omega0_old > M_PI_4/2){
 							break;
 						}
 						v_tmp = mom_tmp/g0_fun(angle_old) + 0.5 * timestep * (MS_fun.deriv(1, angle_old) /g0_fun(angle_old) + MS_fun.deriv(1, angle_tmp) /g0_fun(angle_tmp));
@@ -935,7 +935,7 @@ void QSLE::compute_transition_coefficients()
             D1_tmp= d01_fun(angle_init)* mom_tmp /g0_fun(angle_init);
             M_old= 2.0* D0* D1_tmp;
             W_tmp=0.;
-            omega0_old = deltaE_fun(angle_init);
+            omega0_old = deltaE_fun(angle_init)/htag;
             /*
             if (i== number_of_points/2 + mom_points/2 ){
                 tempo.push_back(angle_init);
@@ -956,6 +956,9 @@ void QSLE::compute_transition_coefficients()
                 if (angle_tmp < supp_d01[0] || angle_tmp > supp_d01.back()){
                     break;
                 }
+				if (timestep*omega0_old > M_PI_4/2){
+					break;
+				}
                 v_tmp = mom_tmp/g0_fun(angle_old) + 0.5 * timestep * (MS_fun.deriv(1, angle_old) /g0_fun(angle_old) + MS_fun.deriv(1, angle_tmp) /g0_fun(angle_tmp));
                 mom_tmp = v_tmp *g0_fun(angle_tmp);
                 D1_tmp= d01_fun(angle_tmp)* mom_tmp /g0_fun(angle_tmp);
