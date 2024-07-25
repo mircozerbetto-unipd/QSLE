@@ -876,7 +876,7 @@ void QSLE::compute_transition_coefficients()
 						if (angle_tmp > M_PI){
 							angle_tmp -= 2.0*M_PI;
 						}
-						if (timestep*omega0_old > M_PI_4/2){
+						if (omega0_old > 2.25){
 							break;
 						}
 						v_tmp = mom_tmp/g0_fun(angle_old) + 0.5 * timestep * (MS_fun.deriv(1, angle_old) /g0_fun(angle_old) + MS_fun.deriv(1, angle_tmp) /g0_fun(angle_tmp));
@@ -903,7 +903,7 @@ void QSLE::compute_transition_coefficients()
 						if (angle_tmp < supp_d01[0] || angle_tmp > supp_d01.back()){
 							break;
 						}
-						if (timestep*omega0_old > M_PI_4/2){
+						if (omega0_old > 2.25){
 							break;
 						}
 						v_tmp = mom_tmp/g0_fun(angle_old) + 0.5 * timestep * (MS_fun.deriv(1, angle_old) /g0_fun(angle_old) + MS_fun.deriv(1, angle_tmp) /g0_fun(angle_tmp));
@@ -956,9 +956,9 @@ void QSLE::compute_transition_coefficients()
                 if (angle_tmp < supp_d01[0] || angle_tmp > supp_d01.back()){
                     break;
                 }
-				if (timestep*omega0_old > M_PI_4/2){
-					break;
-				}
+		if (omega0_old > 2.25){
+		    break;
+		}
                 v_tmp = mom_tmp/g0_fun(angle_old) + 0.5 * timestep * (MS_fun.deriv(1, angle_old) /g0_fun(angle_old) + MS_fun.deriv(1, angle_tmp) /g0_fun(angle_tmp));
                 mom_tmp = v_tmp *g0_fun(angle_tmp);
                 D1_tmp= d01_fun(angle_tmp)* mom_tmp /g0_fun(angle_tmp);
@@ -1219,8 +1219,10 @@ void QSLE::compute_LRBF_matrix()
             iteration = close_p/2;
             Pbeta = p_i / abs(p_i) * sqrt(radice);
             if (-mom_max + iteration*dy > Pbeta) {
+				m10[i] = 0;
             } else if (mom_max - iteration * dy < Pbeta) {
                 iteration = mom_points - 1 - close_p/2;
+                m10[i] = 0;
             } else {
                 for (long long int ii = close_p/2; ii < mom_points - close_p/2; ii++) {
                     if (-mom_max + ii * dy - dy / 2.0 <= Pbeta && Pbeta <= -mom_max + ii * dy + dy / 2.0) {
@@ -1327,8 +1329,10 @@ void QSLE::compute_FD_matrix()
             iteration = 1;
             Pbeta = p_i / abs(p_i) * sqrt(radice);
             if (-mom_max +dy > Pbeta) {
+				m10[i] = 0;
             } else if (mom_max -dy < Pbeta) {
                 iteration = mom_points - 2;
+                m10[i] = 0;
             } else {
                 for (long long int ii = 1; ii < mom_points-1; ii++) {
                     if (-mom_max + ii * dy - dy / 2.0 <= Pbeta && Pbeta <= -mom_max + ii * dy + dy / 2.0) {
