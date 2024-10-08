@@ -110,7 +110,7 @@ step into the QSLE-v1.0 folder and run the build.sh script
 then type 1 and press enter. The information about the compiling procedure will
 be printed out on the terminal.
 
-If you want to clean up all the the built packages and executables, run again the build.sh script
+If you want to clean up all the the built packages and the executable, run again the build.sh script
 
     ./build.sh
 
